@@ -1,17 +1,17 @@
 # CancelledTrainDetails
 
-CancelledTrainDetails is an Android Application which is used to get Train Route based on a given train number.
+Cancelled Train Details is an Android Application which is used to get Cancelled Train Details based on the Current Date.
 To implement this we need to follow some of the steps
 
 STEP 1:
-To get Train Route we must need a API.The API I used in this application is RAILWAYAPI,to know more details about it
+To get Cancelled Train Details we must need a API.The API I used in this application is RAILWAYAPI,to know more details about it
 visit  https://railwayapi.com/ 
 after registering you will be given a API Key which is used to make our api requests.
 
 STEP 2:
 There are providing Various API Functionalities we need to choose required API for our Application and the api that used in this application is
 
-https://api.railwayapi.com/v2/route/train/<train number>/apikey/<apikey>/
+https://api.railwayapi.com/v2/cancelled/date/<dd-mm-yyyy>/apikey/<apikey>/
         
 STEP 3:
 In your Android Application Project Gradle file add
@@ -33,7 +33,7 @@ dependencies {
 STEP 4:
 Covert the JSON format into java Classes(Project Name->Right Click->Create Classes From JSON).The New Java Class looks like
 
-public class TrainRoutePOJO {
+public class CancelledTrainsPOJO {
  
     @SerializedName("train")
     private String train;
@@ -51,9 +51,9 @@ Create a New Interface file and make a GET request with Base Url of the Http Req
 
 public interface ApiInterface {
 
-    @GET("v2/route/train/<train number>/apikey/<apikey>/")
+    @GET("v2/cancelled/date/<dd-mm-yyyy>/apikey/<apikey>/")
     //This Base Url is only for Getting Train Details like Working Days
-    Call<TrainRoutePOJO> getRoute();
+    Call<CancelledTrainsPOJO> getDetails();
 }
 <apikey>-->Replace it with your API Key.
 TrainDetailsPOJO is the main class name that we named while converting JSON Data into Java or Kotlin Classes.
@@ -67,15 +67,15 @@ private void getInformation() {
                 .baseUrl("https://api.railwayapi.com")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Api api = retrofit.create(ApiInterface.class);
-        Call<TrainRoutePOJO> call = api.getRoute();
-        call.enqueue(new Callback<TrainRoutePOJO>() {
+        Call<CancelledTrainsPOJO> call = api.getDetails();
+        call.enqueue(new Callback<CancelledTrainsPOJO>() {
             @Override
-            public void onResponse(Call<TrainRoutePOJO> call, Response<TrainRoutePOJO> response) {
-                TrainRoutePOJO troute= response.body();
+            public void onResponse(Call<CancelledTrainsPOJO> call, Response<CancelledTrainsPOJO> response) {
+                CancelledTrainsPOJO troute= response.body();
                  //Write the Required Code here.
                  }
             @Override
-            public void onFailure(Call<TrainRoutePOJO> call, Throwable t) {
+            public void onFailure(Call<CancelledTrainsPOJO> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();            }
         })
         }
